@@ -1,4 +1,5 @@
-﻿using Phonebook.IPhonebookServices;
+﻿using ConsoleTables;
+using Phonebook.IPhonebookServices;
 using Phonebook.Models;
 using Phonebook.PhonebookServices;
 
@@ -40,6 +41,7 @@ namespace Phonebook
                     repos.Create(phonebookC);
                     Console.WriteLine();
                 }
+
                 else if(n == 2)
                 {
                     var list = repos.ReadAllPhoneBooks();
@@ -53,6 +55,56 @@ namespace Phonebook
                     Console.WriteLine("+------------------------------------+---------------+---------------+");
                     Console.WriteLine();
                 }
+
+                else if (n == 3)
+                {
+                    Console.Write("Enter the ID number: ");
+                    string IdNumber = Console.ReadLine();   
+                    Guid checker = Guid.Parse(IdNumber);
+
+                    if (repos.Delete(checker))
+                    {
+                        Console.WriteLine("Deleted successfully");
+                    }
+                    else
+                    {
+                        Console.WriteLine("was not deleted");
+                    }
+                    Console.WriteLine( );
+                }
+
+                else if( n == 4)
+                {
+                    Console.Write("Enter the ID number: ");
+                    string IdNumber = Console.ReadLine();
+                    
+                    var phonebook = repos.ReadById(Guid.Parse(IdNumber));
+
+                    var table = new ConsoleTable("Id", "Name", "Phone");
+                    table.AddRow(phonebook.Id, phonebook.Name, phonebook.Phone);
+                    table.Write();
+                    Console.WriteLine();
+                }
+
+                else if(n == 5)
+                {
+                    Console.Write("Enter the ID number: ");
+                    string IdNumber = Console.ReadLine();
+
+                    Console.Write("Name: ");
+                    string FirstName = Console.ReadLine();
+                    Console.Write("Phone: ");
+                    string PhoneNumber = Console.ReadLine();
+
+                    PhonebookC phonebookC = new PhonebookC()
+                    {
+                        Name = FirstName,
+                        Phone = PhoneNumber
+                    };
+                    repos.Update(phonebookC, Guid.Parse(IdNumber));
+                    Console.WriteLine();
+                }
+
             }
         }
     }

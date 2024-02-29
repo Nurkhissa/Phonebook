@@ -85,7 +85,7 @@ namespace Phonebook.PhonebookServices
                 {
                     phonebook.Id=Id;
                     phonbooks.Remove(phonebookData);
-                    phonbooks.Add(phonbooks.ToString());
+                    phonbooks.Add(phonebook.ToString());
                     File.WriteAllLines(Helper.Path, phonbooks); 
                 }
             }
